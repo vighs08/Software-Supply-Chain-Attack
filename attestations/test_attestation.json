@@ -1,0 +1,22 @@
+{
+    "attestation_type": "SLSA",
+    "package": {
+        "name": "test-package",
+        "version": "1.0.0"
+    },
+    "builder": {
+        "id": "https://github.com/ssca-defender/build-system"
+    },
+    "source": {
+        "repository": "https://github.com/ssca-defender/test-package",
+        "commit": "abc123"
+    },
+    "build": {
+        "build_type": "python-package",
+        "build_id": "build-001"
+    },
+    "artifact": {
+        "path": "samples/test_package.txt",
+        "sha256": "a1bfdd904c055dfefe3f46804f992a65e2977b0203bc653ea2900640e1557b5b"
+    }
+}

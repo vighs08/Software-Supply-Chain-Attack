@@ -1,0 +1,3 @@
+SSCA Defender Reproducible Build Test
+Version: 1.0.0
+Build content: Hello from the source package

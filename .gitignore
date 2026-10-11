@@ -1,0 +1,42 @@
+# Python environments and generated files
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local environment and secrets
+.env
+.env.*
+*.env
+secrets/
+config.local.*
+
+# Database credentials and local database files
+*.db
+*.sqlite
+*.sqlite3
+pgpass
+pgpass.conf
+
+# Private signing keys and generated local test keys
+cosign.key
+*.key
+integrity/test_keys/
+*_private_key.pem
+private*.pem
+
+# Editor and OS noise
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs and temporary output
+*.log
+tmp/
+temp/
