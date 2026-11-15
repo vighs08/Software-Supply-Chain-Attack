@@ -40,3 +40,6 @@ Thumbs.db
 *.log
 tmp/
 temp/
+
+# Trained ML models and reports (re-create with: python -m anomaly.train_model)
+models/

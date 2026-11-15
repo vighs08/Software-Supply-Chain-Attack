@@ -2,7 +2,7 @@
 
 SSCA-Defender is a final-year Software Supply Chain Attack Detection and Defense project. The long-term project goal is to combine dependency intelligence, anomaly detection, integrity verification, CI/CD security checks, audit logging, and response workflows for software supply chain security.
 
-This repository currently contains a prototype of the **Integrity Verification Module**. It is one component of the larger SSCA-Defender architecture, not a complete production-ready supply chain security platform. Several checks use local sample files and simplified demonstration data so the module can be tested while the broader system is still being developed.
+This repository currently contains prototypes of the **Integrity Verification Module** and the **Anomaly Detection System (ML)**, including email alerts and alert triage management. They are components of the larger SSCA-Defender architecture, not a complete production-ready supply chain security platform. Several checks use local sample files and simplified demonstration data so the module can be tested while the broader system is still being developed.
 
 ## Current Module Scope
 
@@ -21,14 +21,40 @@ Implemented prototype checks include:
 - Flask API integration with `GET /` and `POST /verify`.
 - PostgreSQL audit logging of verification results through `database/audit_logger.py`.
 
-The current implementation does not yet provide the full SSCA-Defender vision described in the project guide, such as complete dependency intelligence, ML-based anomaly detection, runtime protection, CI/CD gateway enforcement, incident response orchestration, or a dashboard.
+The current implementation does not yet provide the full SSCA-Defender vision described in the project guide, such as complete dependency intelligence, runtime protection, CI/CD gateway enforcement, full incident response orchestration, or a dashboard.
+
+## Anomaly Detection System (ML)
+
+The Anomaly Detection System analyses one package release at a time. It examines download spikes, code obfuscation, network/file/API behaviour, size and release-frequency changes, author changes and package drift. It combines:
+
+- an **Isolation Forest** model (unsupervised ML)
+- statistical tests (z-score, MAD, IQR)
+- the results of the Integrity Verification Module
+
+The output is an explainable verdict with a severity (Low / Medium / High / Critical). Suspicious results create alerts in PostgreSQL, can send an email, and can be triaged through the API (New / Under Review / Resolved / False Positive).
+
+The included model and sample data are **synthetic**. Full documentation, including design decisions and limitations, is in [docs/ANOMALY_DETECTION.md](docs/ANOMALY_DETECTION.md).
+
+Quick start (PowerShell, inside the activated virtual environment):
+
+```powershell
+pip install -r requirements.txt
+python -m anomaly.train_model           # train on synthetic normal data
+python demo_anomaly.py                  # offline demo, no database needed
+python -m pytest                        # run the automated tests
+python -m database.init_anomaly_tables  # create the PostgreSQL tables (needs SSCA_DB_PASSWORD)
+```
 
 ## Project Structure
 
 ```text
 SSCA-Defender/
 |-- api.py
+|-- anomaly_api.py            (anomaly / alert / triage API endpoints)
+|-- demo_anomaly.py
 |-- main.py
+|-- requirements.txt
+|-- pytest.ini
 |-- generate_test_keys.py
 |-- test_signature.py
 |-- test_signature_integration.py
@@ -43,8 +69,30 @@ SSCA-Defender/
 |   |-- verification_engine.py
 |   |-- version_verifier.py
 |   `-- test_keys/
+|-- anomaly/                  (Anomaly Detection System)
+|   |-- data_preparation.py
+|   |-- features.py
+|   |-- code_analysis.py
+|   |-- behavior_analysis.py
+|   |-- stat_methods.py
+|   |-- integrity_signals.py
+|   |-- model.py
+|   |-- detector.py
+|   |-- sample_data.py
+|   `-- train_model.py
+|-- alerts/                   (email alerts, recommendations, triage)
+|   |-- alert_service.py
+|   |-- email_notifier.py
+|   |-- recommendations.py
+|   `-- triage.py
+|-- data/samples/             (synthetic example observations)
+|-- docs/ANOMALY_DETECTION.md
+|-- tests/
 |-- database/
 |   |-- audit_logger.py
+|   |-- alert_repository.py
+|   |-- anomaly_schema.sql
+|   |-- init_anomaly_tables.py
 |   `-- __init__.py
 |-- attestations/
 |   |-- test_attestation.json
@@ -69,7 +117,7 @@ SSCA-Defender/
     `-- __init__.py
 ```
 
-Generated folders such as `venv/` and `__pycache__/` should not be committed.
+Generated folders such as `venv/`, `models/` and `__pycache__/` should not be committed.
 
 ## Setup on Windows PowerShell
 
@@ -84,7 +132,7 @@ python -m pip install --upgrade pip
 Install the Python packages used by the current prototype:
 
 ```powershell
-pip install flask cryptography psycopg pyasn1 rfc3161ng
+pip install -r requirements.txt
 ```
 
 If PowerShell blocks script activation, allow scripts for the current user:
@@ -270,15 +318,15 @@ The generated private key is for local demonstration only and should not be comm
 - Reproducible build verification compares two local files by hash rather than rebuilding from source in an isolated environment.
 - API signature verification is normally `NOT_CHECKED` because `/verify` does not accept signature material.
 - PostgreSQL audit logging is required for successful `main.py` and `/verify` execution.
-- No complete dependency intelligence, anomaly detection, runtime protection, CI/CD gateway, response orchestration, or dashboard implementation is present yet.
+- No complete dependency intelligence, runtime protection, CI/CD gateway, response orchestration, or dashboard implementation is present yet.
+- The anomaly detection model is trained on synthetic data, and behaviour data (network, files, API calls) must be supplied as input. See [docs/ANOMALY_DETECTION.md](docs/ANOMALY_DETECTION.md#10-limitations-please-read).
 
 ## Future Improvements
 
 - Move trusted package metadata to a signed configuration store or trusted registry source.
 - Add a migration or setup script for the PostgreSQL audit table.
-- Add a `requirements.txt` or `pyproject.toml` for reproducible dependency installation.
 - Extend the API to accept or resolve trusted signatures and public keys securely.
 - Add full SLSA/in-toto provenance validation and Sigstore/cosign verification.
 - Add semantic-version policy checks and package ecosystem metadata lookup.
-- Add automated unit tests for each verifier and API tests for success and failure cases.
+- Add automated unit tests for each integrity verifier (the anomaly detection module already has tests in `tests/`).
 - Integrate this module with the planned dependency intelligence, anomaly detection, CI/CD, dashboard, and incident response components.

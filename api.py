@@ -7,9 +7,13 @@ from integrity.hash_verifier import calculate_hash
 from integrity.package_info import PackageInfo
 from integrity.verification_engine import verify_package
 from database.audit_logger import save_audit_record
+from anomaly_api import anomaly_bp
 
 
 app = Flask(__name__)
+
+# Anomaly Detection System, alerts and triage endpoints (anomaly_api.py).
+app.register_blueprint(anomaly_bp)
 
 # --------------------------------------------------
 # 1. Configure the project and allowed package folder

