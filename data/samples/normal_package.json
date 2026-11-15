@@ -1,0 +1,30 @@
+{
+  "_note": "SYNTHETIC example written by hand for testing. Not real package data.",
+  "synthetic": true,
+  "package_name": "tidy-config",
+  "version": "2.5.0",
+  "ecosystem": "npm",
+  "download_history": [4100, 4350, 3980, 4200, 4420, 4310, 4500, 4280, 4610, 4470, 4550, 4690],
+  "release_history": [
+    {"version": "2.0.0", "released_at": "2025-06-02", "size_bytes": 38200, "author": "priya", "dependencies": ["chalk", "minimist"]},
+    {"version": "2.1.0", "released_at": "2025-07-20", "size_bytes": 39100, "author": "priya", "dependencies": ["chalk", "minimist"]},
+    {"version": "2.2.0", "released_at": "2025-09-01", "size_bytes": 40800, "author": "priya", "dependencies": ["chalk", "minimist"]},
+    {"version": "2.3.0", "released_at": "2025-10-15", "size_bytes": 41500, "author": "sam", "dependencies": ["chalk", "minimist"]},
+    {"version": "2.4.0", "released_at": "2025-12-01", "size_bytes": 42900, "author": "priya", "dependencies": ["chalk", "minimist"],
+     "api_calls": ["path.resolve", "fs.readFile", "JSON.parse"], "network_hosts": ["registry.npmjs.org"]}
+  ],
+  "current_release": {
+    "released_at": "2026-01-14", "size_bytes": 44100, "author": "priya",
+    "dependencies": ["chalk", "minimist"], "has_install_script": false
+  },
+  "source_code": "'use strict';\nconst fs = require('fs');\nconst path = require('path');\n\nfunction loadConfig(file) {\n  const full = path.resolve(process.cwd(), file || 'tidy.json');\n  return JSON.parse(fs.readFileSync(full, 'utf8'));\n}\n\nmodule.exports = { loadConfig };\n",
+  "behavior": {
+    "network_connections": [{"host": "registry.npmjs.org", "port": 443}],
+    "file_accesses": [{"path": "/tmp/build/tidy-config/package.json", "mode": "read"}],
+    "api_calls": ["path.resolve", "fs.readFile", "JSON.parse"]
+  },
+  "integrity": {
+    "hash": "PASS", "signature": "PASS", "version": "PASS", "source": "TRUSTED",
+    "attestation": "PASS", "reproducible_build": "PASS", "timestamp": "PASS"
+  }
+}
